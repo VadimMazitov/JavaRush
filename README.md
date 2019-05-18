@@ -7,3 +7,4 @@ and quantities will be summed up
 2. Pagination is implemented
 3. Search by name is implemented
 4. Possible number of computers to be assembled is identified
+5. Sorting by relevance is possible via "Relevance" column(click)

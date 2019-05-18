@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.vasyapupkin.model.Parts;
 import org.vasyapupkin.service.PartsService;
 
-import javax.ws.rs.Path;
 import java.util.List;
 
 @Controller

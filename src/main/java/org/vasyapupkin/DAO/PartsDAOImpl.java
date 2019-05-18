@@ -3,8 +3,6 @@ package org.vasyapupkin.DAO;
 import org.hibernate.*;
 import org.springframework.stereotype.Repository;
 import org.vasyapupkin.model.Parts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,8 +10,6 @@ import java.util.List;
 public class PartsDAOImpl implements PartsDAO {
 
     private SessionFactory sessionFactory;
-
-    private static final Logger logger = LoggerFactory.getLogger(PartsDAOImpl.class);
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -31,7 +27,6 @@ public class PartsDAOImpl implements PartsDAO {
         Query query = session.createQuery("FROM Parts WHERE relevance=" + relevanceString);
         query.setFirstResult(startNumber);
         query.setMaxResults(total);
-        List<Parts> parts = query.list();
         return query.list();
     }
 
@@ -59,9 +54,7 @@ public class PartsDAOImpl implements PartsDAO {
     @Override
     public Parts findById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Parts parts = (Parts) session.load(Parts.class, id);
-        logger.info("Part found. Details: " + parts);
-        return parts;
+        return (Parts) session.load(Parts.class, id);
     }
 
     @Override
@@ -70,14 +63,12 @@ public class PartsDAOImpl implements PartsDAO {
         Parts parts = (Parts) session.load(Parts.class, id);
         if (parts != null)
             session.delete(parts);
-        logger.info("Part deleted. Details: " + parts);
     }
 
     @Override
     public void update(Parts parts) {
         Session session = sessionFactory.getCurrentSession();
         session.update(parts);
-        logger.info("Part updated. Details: " + parts);
     }
 
     @Override
@@ -88,7 +79,7 @@ public class PartsDAOImpl implements PartsDAO {
         try {
             id = (Integer) query.uniqueResult();
         } catch (NonUniqueResultException | NullPointerException e) {
-            logger.info(e.getMessage());
+            e.printStackTrace();
         }
         if (id != 0) {
             Parts oldPart = (Parts) session.load(Parts.class, id);
@@ -97,7 +88,6 @@ public class PartsDAOImpl implements PartsDAO {
             session.delete(oldPart);
         }
         session.persist(parts);
-        logger.info("Part added. Details: " + parts);
     }
 
     @Override
@@ -109,11 +99,8 @@ public class PartsDAOImpl implements PartsDAO {
         try {
             part = (Parts) query.uniqueResult();
         } catch (NonUniqueResultException e) {
-            logger.info("There are more than one object with a \"" + name + "\"");
+            System.out.println("There are more than one object with a name: \"" + name + "\"");
         }
-//        if (part != null)
-//            logger.info("Part with a name \"" + part.getName() + "\" was found");
-//        else logger.info("Part with a name \"" + part.getName() + "\" was not found");
         return part;
     }
 }

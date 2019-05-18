@@ -20,7 +20,6 @@ public class PartsServiceImpl implements PartsService {
     @Transactional
     public List<Parts> findAllByRelevanceAndPages(int page_id, int total, boolean relevance) {
         int startNumber = (page_id - 1) * 10;
-        List<Parts> parts = partsDAO.findAllByRelevanceAndPages(startNumber, total, relevance);
         return partsDAO.findAllByRelevanceAndPages(startNumber, total, relevance);
     }
 
