@@ -4,7 +4,7 @@ CREATE TABLE parts (
     id int primary key not null AUTO_INCREMENT, 
     name varchar(100) not null,
     number int,
-    relevance varchar(3)
+    relevance int
     );
     
 INSERT into parts (name, number, relevance) VALUES ('Motherboard', 4, 'Yes');
